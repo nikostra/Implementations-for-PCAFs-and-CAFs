@@ -1,10 +1,11 @@
 import af.PCAF;
 import service.FileService;
+import util.ProtocolException;
 
 import java.io.FileNotFoundException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ProtocolException {
         if(args == null || args.length != 2){
             throw new IllegalArgumentException("Args don't have correct length");
         }
@@ -16,5 +17,6 @@ public class Main {
         System.out.println(args[0] + args[1]);
     }
     // args: Reductions to perform (1,2,3,4) filepath to input, filepath to output?
-    // assumptions: txt als input und erst args dann prefs und attacks
+    // assumptions: txt als input und erst args dann prefs und attacks, namen von args und claims kann keine .() und
+    // leerzeichen enthalten
 }

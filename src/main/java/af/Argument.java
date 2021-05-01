@@ -4,6 +4,11 @@ public class Argument {
     private String name;
     private Claim claim;
 
+    public Argument(String name, Claim claim) {
+        this.name = name;
+        this.claim = claim;
+    }
+
     public String getName() {
         return name;
     }

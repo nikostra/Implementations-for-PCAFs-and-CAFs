@@ -1,10 +1,16 @@
 package af;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CAF {
-    private List<Argument> arguments;
-    private List<Attack> attacks;
+    List<Argument> arguments;
+    List<Attack> attacks;
+
+    public CAF() {
+        arguments = new ArrayList<>();
+        attacks = new ArrayList<>();
+    }
 
     public List<Argument> getArguments() {
         return arguments;
