@@ -16,7 +16,7 @@ public class Main {
         }
     }
     // args: Reductions to perform (1,2,3,4) filepath to input, filepath to output?
-    // assumptions: txt als input und erst args dann prefs und attacks, namen von args und claims kann keine .() und
-    // leerzeichen enthalten
+    // assumptions: txt als input und erst args dann prefs und attacks, namen von  args und claims kann keine .() und
+    // whitespace enthalten
     // Fragen: Java 15 ok? Große files nötig? Test files vorhanden?
 }
