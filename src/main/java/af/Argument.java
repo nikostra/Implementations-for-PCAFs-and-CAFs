@@ -24,4 +24,12 @@ public class Argument {
     public void setClaim(Claim claim) {
         this.claim = claim;
     }
+
+    @Override
+    public String toString() {
+        return "Argument{" +
+                "name='" + name + '\'' +
+                ", claim=" + claim +
+                '}';
+    }
 }

@@ -18,4 +18,13 @@ public class PCAF extends CAF{
     public void setPreferences(List<Preference> preferences) {
         this.preferences = preferences;
     }
+
+    @Override
+    public String toString() {
+        return "PCAF{" +
+                "arguments=" + arguments +
+                ", attacks=" + attacks +
+                ", preferences=" + preferences +
+                '}';
+    }
 }

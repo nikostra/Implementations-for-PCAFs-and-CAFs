@@ -19,11 +19,12 @@ public class FileService {
         boolean args = true;
         PCAF pcaf = new PCAF();
         while (scanner.hasNext()){
-            String s = scanner.next().replaceAll("[\\n\\t ]", "");
+            String s = scanner.next().replaceAll("\\s+", "");
             if(args){
                 if(s.startsWith("arg")){
                     String[] parts = s.split("\\(");
-                    parts = parts[0].split(",");
+                    parts = parts[1].split(",");
+                    parts[1] = parts[1].replaceAll("\\)","");
                     pcaf.getArguments().add(new Argument(parts[0], new Claim(parts[1])));
                 }
                 else if (s.startsWith("att") || s.startsWith("pref")){
@@ -36,6 +37,7 @@ public class FileService {
 
             }
         }
+        System.out.println(pcaf);
         return null;
     }
 }

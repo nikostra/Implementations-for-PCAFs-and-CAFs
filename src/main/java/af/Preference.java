@@ -19,4 +19,12 @@ public class Preference {
     public void setInferior(Argument inferior) {
         this.inferior = inferior;
     }
+
+    @Override
+    public String toString() {
+        return "Preference{" +
+                "superior=" + superior +
+                ", inferior=" + inferior +
+                '}';
+    }
 }

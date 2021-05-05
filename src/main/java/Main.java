@@ -14,9 +14,9 @@ public class Main {
         } catch (FileNotFoundException e) {
             System.out.println("Input file not found");
         }
-        System.out.println(args[0] + args[1]);
     }
     // args: Reductions to perform (1,2,3,4) filepath to input, filepath to output?
     // assumptions: txt als input und erst args dann prefs und attacks, namen von args und claims kann keine .() und
     // leerzeichen enthalten
+    // Fragen: Java 15 ok? Große files nötig? Test files vorhanden?
 }

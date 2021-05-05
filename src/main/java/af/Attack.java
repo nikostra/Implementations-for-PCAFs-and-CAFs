@@ -19,4 +19,12 @@ public class Attack {
     public void setDefender(Argument defender) {
         this.defender = defender;
     }
+
+    @Override
+    public String toString() {
+        return "Attack{" +
+                "attacker=" + attacker +
+                ", defender=" + defender +
+                '}';
+    }
 }

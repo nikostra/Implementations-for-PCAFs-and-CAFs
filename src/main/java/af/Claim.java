@@ -30,4 +30,11 @@ public class Claim {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    @Override
+    public String toString() {
+        return "Claim{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
