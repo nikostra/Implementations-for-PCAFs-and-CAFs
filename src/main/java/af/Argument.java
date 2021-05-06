@@ -9,6 +9,10 @@ public class Argument {
         this.claim = claim;
     }
 
+    public Argument(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

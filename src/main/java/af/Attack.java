@@ -4,6 +4,11 @@ public class Attack {
     private Argument attacker;
     private Argument defender;
 
+    public Attack(Argument attacker, Argument defender) {
+        this.attacker = attacker;
+        this.defender = defender;
+    }
+
     public Argument getAttacker() {
         return attacker;
     }

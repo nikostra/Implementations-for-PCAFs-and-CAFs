@@ -9,8 +9,9 @@ public class Main {
         if(args == null || args.length != 2){
             throw new IllegalArgumentException("Args don't have correct length");
         }
+        FileService f = new FileService();
         try {
-            PCAF pcaf = FileService.parseInput(args[1]);
+            PCAF pcaf = f.parseInput(args[1]);
         } catch (FileNotFoundException e) {
             System.out.println("Input file not found");
         }
@@ -18,5 +19,5 @@ public class Main {
     // args: Reductions to perform (1,2,3,4) filepath to input, filepath to output?
     // assumptions: txt als input und erst args dann prefs und attacks, namen von  args und claims kann keine .() und
     // whitespace enthalten
-    // Fragen: Java 15 ok? Große files nötig? Test files vorhanden?
+    // Fragen: Java 15 ok? Große files nötig? Test files vorhanden? Syntax check (zB nicht existierende args in att)?
 }

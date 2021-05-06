@@ -4,6 +4,11 @@ public class Preference {
     private Argument superior;
     private Argument inferior;
 
+    public Preference(Argument superior, Argument inferior) {
+        this.superior = superior;
+        this.inferior = inferior;
+    }
+
     public Argument getSuperior() {
         return superior;
     }
