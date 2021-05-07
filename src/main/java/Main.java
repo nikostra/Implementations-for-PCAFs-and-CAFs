@@ -1,23 +1,30 @@
+import af.CAF;
 import af.PCAF;
 import service.FileService;
+import service.ReductionService;
 import util.ProtocolException;
 
 import java.io.FileNotFoundException;
 
 public class Main {
-    public static void main(String[] args) throws ProtocolException {
+    public static void main(String[] args) throws ProtocolException, FileNotFoundException {
         if(args == null || args.length != 2){
             throw new IllegalArgumentException("Args don't have correct length");
         }
         FileService f = new FileService();
-        try {
-            PCAF pcaf = f.parseInput(args[1]);
-        } catch (FileNotFoundException e) {
-            System.out.println("Input file not found");
-        }
+        PCAF pcaf = f.parseInput(args[1]);
+
+        System.out.println(pcaf);
+
+        ReductionService r = new ReductionService();
+        CAF caf = switch (args[0]) {
+            case "1" -> r.reduction1(pcaf);
+            case "2" -> r.reduction2(pcaf);
+            case "3" -> r.reduction3(pcaf);
+            case "4" -> r.reduction4(pcaf);
+            default -> throw new ProtocolException("Illegal reduction argument");
+        };
+
+        System.out.println(caf);
     }
-    // args: Reductions to perform (1,2,3,4) filepath to input, filepath to output?
-    // assumptions: txt als input und erst args dann prefs und attacks, namen von  args und claims kann keine .() und
-    // whitespace enthalten
-    // Fragen: Java 15 ok? Große files nötig? Test files vorhanden? Syntax check (zB nicht existierende args in att)?
 }

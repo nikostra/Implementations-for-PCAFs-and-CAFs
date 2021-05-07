@@ -49,8 +49,7 @@ public class FileService {
                 }
             }
         }
-        System.out.println(pcaf);
-        return null;
+        return pcaf;
     }
 
     private String[] getParts(String s){

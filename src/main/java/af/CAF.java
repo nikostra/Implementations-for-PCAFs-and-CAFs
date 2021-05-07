@@ -27,4 +27,12 @@ public class CAF {
     public void setAttacks(List<Attack> attacks) {
         this.attacks = attacks;
     }
+
+    @Override
+    public String toString() {
+        return "CAF{" +
+                "arguments=" + arguments +
+                ", attacks=" + attacks +
+                '}';
+    }
 }
