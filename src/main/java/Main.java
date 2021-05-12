@@ -9,12 +9,10 @@ import java.io.FileNotFoundException;
 public class Main {
     public static void main(String[] args) throws ProtocolException, FileNotFoundException {
         if(args == null || args.length != 2){
-            throw new IllegalArgumentException("Args don't have correct length");
+            throw new IllegalArgumentException("Illegal arguments");
         }
         FileService f = new FileService();
         PCAF pcaf = f.parseInput(args[1]);
-
-        System.out.println(pcaf);
 
         ReductionService r = new ReductionService();
         CAF caf = switch (args[0]) {
@@ -22,9 +20,9 @@ public class Main {
             case "2" -> r.reduction2(pcaf);
             case "3" -> r.reduction3(pcaf);
             case "4" -> r.reduction4(pcaf);
-            default -> throw new ProtocolException("Illegal reduction argument");
+            default -> throw new IllegalArgumentException("Illegal reduction argument");
         };
 
-        System.out.println(caf);
+        f.parseOutput(caf);
     }
 }

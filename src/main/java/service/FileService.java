@@ -52,6 +52,14 @@ public class FileService {
         return pcaf;
     }
 
+    public void parseOutput(CAF caf){
+        caf.getArguments().forEach(argument ->
+                System.out.println("arg(" + argument.getName() + ", " + argument.getClaim().getName() + ")."));
+        caf.getAttacks().forEach(attack ->
+                System.out.println("att(" + attack.getAttacker().getName() + ", " + attack.getDefender().getName() +
+                        ")."));
+    }
+
     private String[] getParts(String s){
         String[] parts = s.split("\\(");
         parts = parts[1].split(",");
