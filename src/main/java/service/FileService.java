@@ -27,7 +27,7 @@ public class FileService {
                     args = false;
                     if(s.startsWith("att")){
                         String[] parts = getParts(s);
-                        pcaf.getAttacks().add(new Attack(new Argument(parts[0]), new Argument(parts[1])));
+                        pcaf.addAttack(parts[0], parts[1]);
                     } else if (s.startsWith("pref")){
                         String[] parts = getParts(s);
                         pcaf.getPreferences().add(new Preference(new Argument(parts[0]), new Argument(parts[1])));
@@ -38,7 +38,7 @@ public class FileService {
             }else {
                 if(s.startsWith("att")){
                     String[] parts = getParts(s);
-                    pcaf.getAttacks().add(new Attack(new Argument(parts[0]), new Argument(parts[1])));
+                    pcaf.addAttack(parts[0], parts[1]);
                 } else if (s.startsWith("pref")){
                     String[] parts = getParts(s);
                     pcaf.getPreferences().add(new Preference(new Argument(parts[0]), new Argument(parts[1])));

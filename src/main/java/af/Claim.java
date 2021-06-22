@@ -1,10 +1,12 @@
 package af;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Claim {
 
     private String name;
+    private List<Argument> attacking;
 
     public Claim(String name) {
         this.name = name;
@@ -16,6 +18,14 @@ public class Claim {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Argument> getAttacking() {
+        return attacking;
+    }
+
+    public void setAttacking(List<Argument> attacking) {
+        this.attacking = attacking;
     }
 
     @Override
