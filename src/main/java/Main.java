@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class Main {
     /**
      *
-     * @param args argument format: mandatory: (input filepath) (r1/r2/r3/r4 to select the reduction to perform)
+     * @param args argument format: mandatory: <input filepath> <r1/r2/r3/r4> to select the reduction to perform
      *             Other options in any order: -wfi (for well-formed checks of input) -wfo (for well-formed check
      *             of output) -vp (to verify preferences (transitive, irreflexive, asymmetric))
      *
@@ -26,7 +26,6 @@ public class Main {
      */
     public static void main(String[] args) throws ProtocolException, FileNotFoundException, VerificationException {
         if(args == null){
-
             throw new IllegalArgumentException("Illegal arguments, arguments cannot be empty");
         }
         FileService f = new FileService();
@@ -41,11 +40,14 @@ public class Main {
             argsList.remove("-vp");
         }
         if(argsList.contains("-wfi")){
-
-            if (VerificationService.verifyWellFormedness(pcaf)) {
+            System.out.println();
+            var wfi = VerificationService.verifyWellFormedness(pcaf);
+            if (wfi.isEmpty()) {
                 System.out.println("Input is well-formed");
             } else {
                 System.out.println("Input is NOT well formed");
+                System.out.println("Problematic Pairs: ");
+                System.out.println(wfi);
             }
             argsList.remove("-wfi");
         }
@@ -62,10 +64,14 @@ public class Main {
         };
 
         if(argsList.contains("-wfo")){
-            if (VerificationService.verifyWellFormedness(caf)) {
+            System.out.println();
+            var wfo = VerificationService.verifyWellFormedness(caf);
+            if (wfo.isEmpty()) {
                 System.out.println("Output is well-formed");
             } else {
                 System.out.println("Output is NOT well formed");
+                System.out.println("Problematic Pairs: ");
+                System.out.println(wfo);
             }
             argsList.remove("-wfo");
         }

@@ -45,7 +45,7 @@ public class VerificationService {
         }
     }
 
-    public static boolean verifyWellFormedness(CAF caf) {
+    public static List<Attack> verifyWellFormedness(CAF caf) {
         // loop durch alle attacks, speicher jeweils ab welche claim und arg welches arg angreift. Am Ende wird für jedes gespeicherte arg überprüft ob es die selben angreift wie der claim
         List<Claim> claims = new ArrayList<>();
         List<Argument> args = new ArrayList<>();
@@ -76,21 +76,21 @@ public class VerificationService {
             }
         }
 
-        boolean wellFormed = true;
+        var problematicAttacks = new ArrayList<Attack>();
 
         for (Argument argument : caf.getArguments()) {
-            if (!args.contains(argument) && claims.contains(argument.getClaim())) {
-                wellFormed = false;
-                break;
-            }
             var index = claims.indexOf(argument.getClaim());
-            if (index != -1) {
+            if (!args.contains(argument) && index != -1) {
+                claims.get(index).getAttacking().forEach(arg -> problematicAttacks.add(new Attack(argument, arg)));
+            } else if (index != -1) {
                 if (!new HashSet<>(argument.getAttacking()).equals(new HashSet<>(claims.get(index).getAttacking()))) {
-                    wellFormed = false;
-                    break;
+                    claims.get(index).getAttacking().forEach(arg -> {
+                        if(!argument.getAttacking().contains(arg))
+                            problematicAttacks.add(new Attack(argument, arg));
+                    });
                 }
             }
         }
-        return wellFormed;
+        return problematicAttacks;
     }
 }

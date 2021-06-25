@@ -1,8 +1,15 @@
 arg(a,c1).
 arg(b,c2).
 arg(c,c1).
+arg(d,c3).
+arg(e,c3).
 att(a,b).
 att(c,b).
 att(b,c).
-pref(b,c).
+att(c,d).
+att(e,a).
+att(a,d).
+att(d,a).
 pref(a,b).
+pref(c,d).
+pref(a,d).
