@@ -10,6 +10,5 @@ att(c,d).
 att(e,a).
 att(a,d).
 att(d,a).
-pref(a,b).
-pref(c,d).
 pref(a,d).
+

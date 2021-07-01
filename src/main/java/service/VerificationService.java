@@ -46,7 +46,8 @@ public class VerificationService {
     }
 
     public static List<Attack> verifyWellFormedness(CAF caf) {
-        // loop durch alle attacks, speicher jeweils ab welche claim und arg welches arg angreift. Am Ende wird für jedes gespeicherte arg überprüft ob es die selben angreift wie der claim
+        // loop durch alle attacks, speicher jeweils ab welche claim und arg welches arg angreift.
+        // Am Ende wird für jedes gespeicherte arg überprüft ob es die selben angreift wie der claim.
         List<Claim> claims = new ArrayList<>();
         List<Argument> args = new ArrayList<>();
 

@@ -18,6 +18,9 @@ public class ReductionService {
         return caf;
     }
 
+    // TODO Idee für image checking: caf auf wf checken. Alle attacken übernehmen und die problematischen übernehmen,
+    // zusammen mit preference in gegenrichtung
+
     public CAF reduction2(PCAF pcaf){
         CAF caf = new CAF();
         pcaf.getAttacks().forEach(attack -> {
@@ -62,6 +65,5 @@ public class ReductionService {
         caf.setArguments(pcaf.getArguments());
 
         return caf;
-
     }
 }
