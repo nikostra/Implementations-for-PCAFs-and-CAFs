@@ -71,8 +71,8 @@ public class Statistics {
         return "Statistics: " +
                 "Arguments = " + arguments +
                 ", Preferences = " + preferences +
-                ", CafAttacks = " + cafAttacks +
-                ", PcafAttacks = " + pcafAttacks +
+                ", CAF Attacks = " + cafAttacks +
+                ", PCAF Attacks = " + pcafAttacks +
                 ", Removed Attacks = " + removedAttacks +
                 ", Added Attacks = " + addedAttacks;
     }
