@@ -4,24 +4,25 @@ import af.Attack;
 import af.CAF;
 import af.PCAF;
 import af.Preference;
+import util.Statistics;
 
 public class ReductionService {
 
-    public CAF reduction1(PCAF pcaf){
+    public CAF reduction1(PCAF pcaf, Statistics stats){
         CAF caf = new CAF();
         pcaf.getAttacks().forEach(attack -> {
             if(!pcaf.getPreferences().contains(new Preference(attack.getDefender(), attack.getAttacker()))){
                 caf.getAttacks().add(attack);
+            } else {
+                if(stats != null)
+                    stats.incrementRemovedAttacks();
             }
         });
         caf.setArguments(pcaf.getArguments());
         return caf;
     }
 
-    // TODO Idee für image checking: caf auf wf checken. Alle attacken übernehmen und die problematischen übernehmen,
-    // zusammen mit preference in gegenrichtung
-
-    public CAF reduction2(PCAF pcaf){
+    public CAF reduction2(PCAF pcaf, Statistics stats){
         CAF caf = new CAF();
         pcaf.getAttacks().forEach(attack -> {
             if(!pcaf.getPreferences().contains(new Preference(attack.getDefender(), attack.getAttacker()))){
@@ -29,19 +30,25 @@ public class ReductionService {
             } else if(!pcaf.getAttacks().contains(new Attack(attack.getDefender(), attack.getAttacker())) &&
                         pcaf.getPreferences().contains(new Preference(attack.getDefender(), attack.getAttacker()))){
                 caf.getAttacks().add(new Attack(attack.getDefender(), attack.getAttacker()));
+            } else {
+                if(stats != null)
+                    stats.incrementRemovedAttacks();
             }
         });
         caf.setArguments(pcaf.getArguments());
         return caf;
     }
 
-    public CAF reduction3(PCAF pcaf){
+    public CAF reduction3(PCAF pcaf, Statistics stats){
         CAF caf = new CAF();
         pcaf.getAttacks().forEach(attack -> {
             if(!pcaf.getPreferences().contains(new Preference(attack.getDefender(), attack.getAttacker()))){
                 caf.getAttacks().add(attack);
             } else if(!pcaf.getAttacks().contains(new Attack(attack.getDefender(), attack.getAttacker()))){
                 caf.getAttacks().add(attack);
+            } else {
+                if(stats != null)
+                    stats.incrementRemovedAttacks();
             }
         });
         caf.setArguments(pcaf.getArguments());
@@ -49,7 +56,7 @@ public class ReductionService {
         return caf;
     }
 
-    public CAF reduction4(PCAF pcaf){
+    public CAF reduction4(PCAF pcaf, Statistics stats){
         CAF caf = new CAF();
         pcaf.getAttacks().forEach(attack -> {
             if(!pcaf.getPreferences().contains(new Preference(attack.getDefender(), attack.getAttacker()))){

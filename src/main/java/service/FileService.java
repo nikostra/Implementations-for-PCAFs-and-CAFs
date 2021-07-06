@@ -58,6 +58,12 @@ public class FileService {
         caf.getAttacks().forEach(attack ->
                 System.out.println("att(" + attack.getAttacker().getName() + ", " + attack.getDefender().getName() +
                         ")."));
+        if(caf.getClass().equals(PCAF.class)){
+            PCAF pcaf = (PCAF) caf;
+            pcaf.getPreferences().forEach(preference ->
+                    System.out.println("pref(" + preference.getSuperior().getName() + ", " +
+                            preference.getInferior().getName() + ")."));
+        }
     }
 
     private String[] getParts(String s){
