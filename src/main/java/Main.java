@@ -23,7 +23,7 @@ public class Main {
      *             if i1 is selected, the input is a CAF and image checking is performed, to find a suitable PCAF. For
      *             this option no options are working, except for -stats
      *
-     *             eg a.txt r1 -vp -wfo --> perform reduction 1 on a.txt and verify the preferences
+     *             eg "a.txt r1 -vp -wfo" --> perform reduction 1 on a.txt, verify the preferences
      *             and perform a well-formed check on the output
      *
      * @throws ProtocolException if there is an error while parsing the input
@@ -101,37 +101,63 @@ public class Main {
             System.out.println("Output CAF:");
             f.parseOutput(caf);
 
-        } else if(argsList.contains("i1")){
-            if(argsList.contains("-stats")){
+        } else if(argsList.contains("i1") || argsList.contains("i3")) {
+            if (argsList.contains("-stats")) {
                 stats = new Statistics();
                 stats.setArguments(pcaf.getArguments().size());
                 stats.setCafAttacks(pcaf.getAttacks().size());
             }
 
+            if (argsList.contains("i1")) {
+                PCAF imagePcaf = ImageService.image1(pcaf, stats);
 
-            PCAF imagePcaf = ImageService.image1(pcaf, stats);
+                try {
+                    VerificationService.verifyPreferencesImage(imagePcaf);
+                } catch (VerificationException e) {
+                    System.out.println("CAF NOT in image of reduction 1, resulting Preferences not valid.");
+                    System.out.println(e.getMessage());
 
-            try {
-                VerificationService.verifyPreferencesImage(imagePcaf);
-            } catch (VerificationException e){
-                System.out.println("CAF not in image of reduction 1, resulting Preferences not valid.");
-                System.out.println(e.getMessage());
+                    f.parseOutput(imagePcaf);
 
+                    System.exit(0);
+                }
+
+                if (stats != null) {
+                    stats.setPreferences(imagePcaf.getPreferences().size());
+                    stats.setPcafAttacks(imagePcaf.getAttacks().size());
+                    System.out.println(stats);
+                }
+
+                System.out.println("CAF is contained in image of reduction 1.");
+                System.out.println("Possible PCAF:");
                 f.parseOutput(imagePcaf);
 
-                System.exit(0);
+            } else if(argsList.contains("i3")){
+                PCAF imagePcaf = new PCAF();
+                try {
+                    imagePcaf = ImageService.image3(pcaf, stats);
+                } catch (VerificationException e){
+                    System.out.println("CAF NOT in image of reduction 3, missing attack");
+                    System.exit(0);
+                }
+
+                try {
+                    VerificationService.verifyPreferencesImage(imagePcaf);
+                } catch (VerificationException e) {
+                    System.out.println("CAF NOT in image of reduction 3, resulting Preferences not valid.");
+                    System.out.println(e.getMessage());
+                    f.parseOutput(imagePcaf);
+                    System.exit(0);
+                }
+                if (stats != null) {
+                    stats.setPreferences(imagePcaf.getPreferences().size());
+                    stats.setPcafAttacks(imagePcaf.getAttacks().size());
+                    System.out.println(stats);
+                }
+                System.out.println("CAF is contained in image of reduction 3.");
+                System.out.println("Possible PCAF:");
+                f.parseOutput(imagePcaf);
             }
-
-            if(stats != null) {
-                stats.setPreferences(imagePcaf.getPreferences().size());
-                stats.setPcafAttacks(imagePcaf.getAttacks().size());
-                System.out.println(stats);
-            }
-
-            System.out.println("CAF is contained in image of reduction 1.");
-            System.out.println("Possible PCAF:");
-            f.parseOutput(imagePcaf);
-
         }
     }
 }
