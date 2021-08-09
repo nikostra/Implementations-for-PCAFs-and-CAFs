@@ -38,6 +38,7 @@ public class ImageService {
 
         for (Attack attack : problematic) {
             if (!pcaf.getAttacks().contains(new Attack(attack.getDefender(), attack.getAttacker()))) {
+                System.out.println("Missing Attack: " + new Attack(attack.getAttacker(), attack.getDefender()));
                 throw new VerificationException("");
             }
             pcaf.getPreferences().add(new Preference(attack.getDefender(), attack.getAttacker()));
