@@ -137,7 +137,7 @@ public class Main {
                 try {
                     imagePcaf = ImageService.image3(pcaf, stats);
                 } catch (VerificationException e){
-                    System.out.println("CAF NOT in image of reduction 3, missing attack");
+                    System.out.println("CAF NOT in image of reduction 3, missing at least one attack");
                     System.exit(0);
                 }
 
