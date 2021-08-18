@@ -56,6 +56,7 @@ public class ReductionService {
         return caf;
     }
 
+    // TODO use stats
     public CAF reduction4(PCAF pcaf, Statistics stats){
         CAF caf = new CAF();
         pcaf.getAttacks().forEach(attack -> {
