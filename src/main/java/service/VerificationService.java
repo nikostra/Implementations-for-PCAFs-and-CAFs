@@ -20,7 +20,7 @@ public class VerificationService {
                 throw new VerificationException("Preference not asymmetric: " + preference);
         }
 
-        //transitive
+        //transitive TODO test this version
         for (int i = 0; i < pcaf.getArguments().size(); i++) {
             for (int j = i + 1; j < pcaf.getArguments().size(); j++) {
                 for (int k = j + 1; k < pcaf.getArguments().size(); k++) {
@@ -28,17 +28,39 @@ public class VerificationService {
                     Argument b = pcaf.getArguments().get(j);
                     Argument c = pcaf.getArguments().get(k);
 
-                    if (pcaf.getPreferences().contains(new Preference(b, a)) && pcaf.getPreferences().contains(new Preference(c, b)) && !pcaf.getPreferences().contains(new Preference(c, a)))
+                    boolean ab = false;
+                    boolean ac = false;
+                    boolean ba = false;
+                    boolean bc = false;
+                    boolean ca = false;
+                    boolean cb = false;
+
+                    for (Preference preference : pcaf.getPreferences()) {
+                        if (preference.equals(new Preference(a, b)))
+                            ab = true;
+                        if (preference.equals(new Preference(a, c)))
+                            ac = true;
+                        if (preference.equals(new Preference(b, a)))
+                            ba = true;
+                        if (preference.equals(new Preference(b, c)))
+                            bc = true;
+                        if (preference.equals(new Preference(c, a)))
+                            ca = true;
+                        if (preference.equals(new Preference(c, b)))
+                            cb = true;
+                    }
+
+                    if (ba && cb && !ca)
                         throw new VerificationException("Preferences not transitive. Preference missing: " + new Preference(c, a));
-                    if (pcaf.getPreferences().contains(new Preference(c, a)) && pcaf.getPreferences().contains(new Preference(b, c)) && !pcaf.getPreferences().contains(new Preference(b, a)))
+                    if (ca && bc && !ba)
                         throw new VerificationException("Preferences not transitive. Preference missing: " + new Preference(b, a));
-                    if (pcaf.getPreferences().contains(new Preference(a, b)) && pcaf.getPreferences().contains(new Preference(c, a)) && !pcaf.getPreferences().contains(new Preference(c, b)))
+                    if (ab && ca && !cb)
                         throw new VerificationException("Preferences not transitive. Preference missing: " + new Preference(c, b));
-                    if (pcaf.getPreferences().contains(new Preference(a, c)) && pcaf.getPreferences().contains(new Preference(b, a)) && !pcaf.getPreferences().contains(new Preference(b, c)))
+                    if (ac && ba && !bc)
                         throw new VerificationException("Preferences not transitive. Preference missing: " + new Preference(b, c));
-                    if (pcaf.getPreferences().contains(new Preference(b, c)) && pcaf.getPreferences().contains(new Preference(a, b)) && !pcaf.getPreferences().contains(new Preference(a, c)))
+                    if (bc && ab && !ac)
                         throw new VerificationException("Preferences not transitive. Preference missing: " + new Preference(a, c));
-                    if (pcaf.getPreferences().contains(new Preference(c, b)) && pcaf.getPreferences().contains(new Preference(a, c)) && !pcaf.getPreferences().contains(new Preference(a, b)))
+                    if (cb && ac && !ab)
                         throw new VerificationException("Preferences not transitive. Preference missing: " + new Preference(a, b));
                 }
             }
@@ -55,6 +77,7 @@ public class VerificationService {
             if (pcaf.getPreferences().contains(new Preference(preference.getInferior(), preference.getSuperior())))
                 throw new VerificationException("Preference not asymmetric: " + preference);
         }
+
 
         //transitive
         for (int i = 0; i < pcaf.getArguments().size(); i++) {

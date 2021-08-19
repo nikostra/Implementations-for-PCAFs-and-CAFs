@@ -56,7 +56,7 @@ public class ReductionService {
         return caf;
     }
 
-    // TODO use stats
+    // TODO use stats, forward slashes statt backwards??
     public CAF reduction4(PCAF pcaf, Statistics stats){
         CAF caf = new CAF();
         pcaf.getAttacks().forEach(attack -> {

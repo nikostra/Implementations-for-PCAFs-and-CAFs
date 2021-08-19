@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class Main {
     /**
      *
-     * @param args argument format: mandatory: <input filepath> <r1/r2/r3/r4/i1> to select the reduction to perform
+     * @param args argument format: mandatory: <input filepath> <r1/r2/r3/r4/i1/i3> to select the reduction to perform
      *             Other options in any order: -wfi (for well-formed checks of input) -wfo (for well-formed check
      *             of output) -vp (to verify preferences (transitive, irreflexive, asymmetric))
      *             -stats for detailed statistics about the structures
