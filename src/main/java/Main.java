@@ -101,7 +101,7 @@ public class Main {
             System.out.println("Output CAF:");
             f.parseOutput(caf);
 
-        } else if(argsList.contains("i1") || argsList.contains("i3")) {
+        } else if(argsList.contains("i1") || argsList.contains("i3") || argsList.contains("i2")) {
             if (argsList.contains("-stats")) {
                 stats = new Statistics();
                 stats.setArguments(pcaf.getArguments().size());
@@ -129,6 +129,30 @@ public class Main {
                 }
 
                 System.out.println("CAF is contained in image of reduction 1.");
+                System.out.println("Possible PCAF:");
+                f.parseOutput(imagePcaf);
+
+            } else if (argsList.contains("i2")) {
+                PCAF imagePcaf = ImageService.image2(pcaf, stats);
+
+                try {
+                    VerificationService.verifyPreferencesImage(imagePcaf);
+                } catch (VerificationException e) {
+                    System.out.println("CAF NOT in image of reduction 2, resulting Preferences not valid.");
+                    System.out.println(e.getMessage());
+
+                    f.parseOutput(imagePcaf);
+
+                    System.exit(0);
+                }
+
+                if (stats != null) {
+                    stats.setPreferences(imagePcaf.getPreferences().size());
+                    stats.setPcafAttacks(imagePcaf.getAttacks().size());
+                    System.out.println(stats);
+                }
+
+                System.out.println("CAF is contained in image of reduction 2.");
                 System.out.println("Possible PCAF:");
                 f.parseOutput(imagePcaf);
 
