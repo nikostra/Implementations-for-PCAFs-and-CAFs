@@ -1,7 +1,9 @@
-arg(a,c1).
-arg(b,c2).
-arg(c,c1).
-arg(d,c2).
-att(b,a).
-att(c,b).
-att(d,c).
+arg(w,A).
+arg(x,A).
+arg(y,A).
+arg(z,B).
+att(w,z).
+att(x,z).
+att(y,z).
+pref(z,w).
+pref(z,y).

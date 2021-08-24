@@ -79,7 +79,7 @@ public class VerificationService {
         }
 
 
-        //transitive
+        //transitive TODO change to new style
         for (int i = 0; i < pcaf.getArguments().size(); i++) {
             for (int j = i + 1; j < pcaf.getArguments().size(); j++) {
                 for (int k = j + 1; k < pcaf.getArguments().size(); k++) {
