@@ -30,6 +30,10 @@ public class ReductionService {
             } else if(!pcaf.getAttacks().contains(new Attack(attack.getDefender(), attack.getAttacker())) &&
                         pcaf.getPreferences().contains(new Preference(attack.getDefender(), attack.getAttacker()))){
                 caf.getAttacks().add(new Attack(attack.getDefender(), attack.getAttacker()));
+                if(stats != null){
+                    stats.incrementAddedAttacks();
+                    stats.incrementRemovedAttacks();
+                }
             } else {
                 if(stats != null)
                     stats.incrementRemovedAttacks();
@@ -56,7 +60,6 @@ public class ReductionService {
         return caf;
     }
 
-    // TODO use stats, forward slashes statt backwards??
     public CAF reduction4(PCAF pcaf, Statistics stats){
         CAF caf = new CAF();
         pcaf.getAttacks().forEach(attack -> {
@@ -64,10 +67,15 @@ public class ReductionService {
                 caf.getAttacks().add(attack);
             } else if(!pcaf.getAttacks().contains(new Attack(attack.getDefender(), attack.getAttacker()))){
                 caf.getAttacks().add(attack);
+            } else {
+                if(stats != null)
+                    stats.incrementRemovedAttacks();
             }
             if(!pcaf.getAttacks().contains(new Attack(attack.getDefender(), attack.getAttacker())) &&
                     pcaf.getPreferences().contains(new Preference(attack.getDefender(), attack.getAttacker()))) {
                 caf.getAttacks().add(new Attack(attack.getDefender(), attack.getAttacker()));
+                if(stats != null)
+                    stats.incrementAddedAttacks();
             }
         });
         caf.setArguments(pcaf.getArguments());

@@ -20,7 +20,7 @@ public class VerificationService {
                 throw new VerificationException("Preference not asymmetric: " + preference);
         }
 
-        //transitive TODO test this version
+        //transitive
         for (int i = 0; i < pcaf.getArguments().size(); i++) {
             for (int j = i + 1; j < pcaf.getArguments().size(); j++) {
                 for (int k = j + 1; k < pcaf.getArguments().size(); k++) {
@@ -102,6 +102,52 @@ public class VerificationService {
                 }
             }
         }
+
+        for (int i = 0; i < pcaf.getArguments().size(); i++) {
+            for (int j = i + 1; j < pcaf.getArguments().size(); j++) {
+                for (int k = j + 1; k < pcaf.getArguments().size(); k++) {
+                    Argument a = pcaf.getArguments().get(i);
+                    Argument b = pcaf.getArguments().get(j);
+                    Argument c = pcaf.getArguments().get(k);
+
+                    boolean ab = false;
+                    boolean ac = false;
+                    boolean ba = false;
+                    boolean bc = false;
+                    boolean ca = false;
+                    boolean cb = false;
+
+                    for (Preference preference : pcaf.getPreferences()) {
+                        if (preference.equals(new Preference(a, b)))
+                            ab = true;
+                        if (preference.equals(new Preference(a, c)))
+                            ac = true;
+                        if (preference.equals(new Preference(b, a)))
+                            ba = true;
+                        if (preference.equals(new Preference(b, c)))
+                            bc = true;
+                        if (preference.equals(new Preference(c, a)))
+                            ca = true;
+                        if (preference.equals(new Preference(c, b)))
+                            cb = true;
+                    }
+
+                    if (ba && cb && !ca)
+                        pcaf.getPreferences().add(new Preference(c, a));
+                    if (ca && bc && !ba)
+                        pcaf.getPreferences().add(new Preference(b, a));
+                    if (ab && ca && !cb)
+                        pcaf.getPreferences().add(new Preference(c, b));
+                    if (ac && ba && !bc)
+                        pcaf.getPreferences().add(new Preference(b, c));
+                    if (bc && ab && !ac)
+                        pcaf.getPreferences().add(new Preference(a, c));
+                    if (cb && ac && !ab)
+                        pcaf.getPreferences().add(new Preference(a, b));
+                }
+            }
+        }
+
     }
 
 

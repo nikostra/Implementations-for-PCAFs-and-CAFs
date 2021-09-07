@@ -53,6 +53,6 @@ public class Argument {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Argument argument = (Argument) o;
-        return name.equals(argument.name); // && Objects.equals(claim, argument.claim); TODO think about this -> every argument has to have a distinct name is a solution!
+        return name.equals(argument.name);
     }
 }
