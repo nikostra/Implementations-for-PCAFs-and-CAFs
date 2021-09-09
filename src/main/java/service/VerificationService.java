@@ -78,31 +78,7 @@ public class VerificationService {
                 throw new VerificationException("Preference not asymmetric: " + preference);
         }
 
-
-        //transitive TODO change to new style
-        for (int i = 0; i < pcaf.getArguments().size(); i++) {
-            for (int j = i + 1; j < pcaf.getArguments().size(); j++) {
-                for (int k = j + 1; k < pcaf.getArguments().size(); k++) {
-                    Argument a = pcaf.getArguments().get(i);
-                    Argument b = pcaf.getArguments().get(j);
-                    Argument c = pcaf.getArguments().get(k);
-
-                    if (pcaf.getPreferences().contains(new Preference(b, a)) && pcaf.getPreferences().contains(new Preference(c, b)) && !pcaf.getPreferences().contains(new Preference(c, a)))
-                        pcaf.getPreferences().add(new Preference(c, a));
-                    if (pcaf.getPreferences().contains(new Preference(c, a)) && pcaf.getPreferences().contains(new Preference(b, c)) && !pcaf.getPreferences().contains(new Preference(b, a)))
-                        pcaf.getPreferences().add(new Preference(b, a));
-                    if (pcaf.getPreferences().contains(new Preference(a, b)) && pcaf.getPreferences().contains(new Preference(c, a)) && !pcaf.getPreferences().contains(new Preference(c, b)))
-                        pcaf.getPreferences().add(new Preference(c, b));
-                    if (pcaf.getPreferences().contains(new Preference(a, c)) && pcaf.getPreferences().contains(new Preference(b, a)) && !pcaf.getPreferences().contains(new Preference(b, c)))
-                        pcaf.getPreferences().add(new Preference(b, c));
-                    if (pcaf.getPreferences().contains(new Preference(b, c)) && pcaf.getPreferences().contains(new Preference(a, b)) && !pcaf.getPreferences().contains(new Preference(a, c)))
-                        pcaf.getPreferences().add(new Preference(a, c));
-                    if (pcaf.getPreferences().contains(new Preference(c, b)) && pcaf.getPreferences().contains(new Preference(a, c)) && !pcaf.getPreferences().contains(new Preference(a, b)))
-                        pcaf.getPreferences().add(new Preference(a, b));
-                }
-            }
-        }
-
+        //transitive
         for (int i = 0; i < pcaf.getArguments().size(); i++) {
             for (int j = i + 1; j < pcaf.getArguments().size(); j++) {
                 for (int k = j + 1; k < pcaf.getArguments().size(); k++) {
@@ -152,8 +128,6 @@ public class VerificationService {
 
 
     public static List<Attack> verifyWellFormedness(CAF caf) {
-        // loop durch alle attacks, speicher jeweils ab welche claim und arg welches arg angreift.
-        // Am Ende wird für jedes gespeicherte arg überprüft ob es die selben angreift wie der claim.
         List<Claim> claims = new ArrayList<>();
         List<Argument> args = new ArrayList<>();
 

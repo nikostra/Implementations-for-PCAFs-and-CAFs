@@ -35,7 +35,8 @@ public class Main {
             throw new IllegalArgumentException("Illegal arguments, arguments cannot be empty");
         }
         FileService f = new FileService();
-        PCAF pcaf = f.parseInput(args[0]);
+        ReductionService r = new ReductionService();
+        PCAF input = f.parseInput(args[0]);
 
         var argsList = Arrays.asList(args);
         argsList = new ArrayList<>(argsList);
@@ -46,18 +47,18 @@ public class Main {
         if (argsList.contains("r1") || argsList.contains("r2") || argsList.contains("r3") || argsList.contains("r4")) {
             if(argsList.contains("-stats")){
                 stats = new Statistics();
-                stats.setArguments(pcaf.getArguments().size());
-                stats.setPcafAttacks(pcaf.getAttacks().size());
-                stats.setPreferences(pcaf.getPreferences().size());
+                stats.setArguments(input.getArguments().size());
+                stats.setPcafAttacks(input.getAttacks().size());
+                stats.setPreferences(input.getPreferences().size());
             }
 
             if (argsList.contains("-vp")) {
-                VerificationService.verifyPreferences(pcaf);
+                VerificationService.verifyPreferences(input);
                 argsList.remove("-vp");
             }
             if (argsList.contains("-wfi")) {
                 System.out.println();
-                var wfi = VerificationService.verifyWellFormedness(pcaf);
+                var wfi = VerificationService.verifyWellFormedness(input);
                 if (wfi.isEmpty()) {
                     System.out.println("Input is well-formed");
                 } else {
@@ -68,14 +69,13 @@ public class Main {
                 argsList.remove("-wfi");
             }
 
-            ReductionService r = new ReductionService();
             String reduction = argsList.get(0);
             argsList.remove(0);
             CAF caf = switch (reduction) {
-                case "r1" -> r.reduction1(pcaf, stats);
-                case "r2" -> r.reduction2(pcaf, stats);
-                case "r3" -> r.reduction3(pcaf, stats);
-                case "r4" -> r.reduction4(pcaf, stats);
+                case "r1" -> r.reduction1(input, stats);
+                case "r2" -> r.reduction2(input, stats);
+                case "r3" -> r.reduction3(input, stats);
+                case "r4" -> r.reduction4(input, stats);
                 default -> throw new IllegalArgumentException("Illegal reduction argument");
             };
 
@@ -101,24 +101,28 @@ public class Main {
             System.out.println("Output CAF:");
             f.parseOutput(caf);
 
-        } else if(argsList.contains("i1") || argsList.contains("i3") || argsList.contains("i2")) {
+        } else if(argsList.contains("i1") || argsList.contains("i3")) {
             if (argsList.contains("-stats")) {
                 stats = new Statistics();
-                stats.setArguments(pcaf.getArguments().size());
-                stats.setCafAttacks(pcaf.getAttacks().size());
+                stats.setArguments(input.getArguments().size());
+                stats.setCafAttacks(input.getAttacks().size());
             }
 
             if (argsList.contains("i1")) {
-                PCAF imagePcaf = ImageService.image1(pcaf, stats);
+                PCAF imagePcaf = ImageService.image1(input, stats);
 
                 try {
                     VerificationService.verifyPreferencesImage(imagePcaf);
                 } catch (VerificationException e) {
                     System.out.println("CAF NOT in image of reduction 1, resulting Preferences not valid.");
                     System.out.println(e.getMessage());
-
                     f.parseOutput(imagePcaf);
+                    System.exit(0);
+                }
 
+                var redCAF = r.reduction1(imagePcaf, null);
+                if(!redCAF.equals(input)){
+                    System.out.println("CAF NOT in image of reduction 1, input and reduced CAF don't match");
                     System.exit(0);
                 }
 
@@ -132,34 +136,10 @@ public class Main {
                 System.out.println("Possible PCAF:");
                 f.parseOutput(imagePcaf);
 
-            } else if (argsList.contains("i2")) {
-                PCAF imagePcaf = ImageService.image2(pcaf, stats);
-
-                try {
-                    VerificationService.verifyPreferencesImage(imagePcaf);
-                } catch (VerificationException e) {
-                    System.out.println("CAF NOT in image of reduction 2, resulting Preferences not valid.");
-                    System.out.println(e.getMessage());
-
-                    f.parseOutput(imagePcaf);
-
-                    System.exit(0);
-                }
-
-                if (stats != null) {
-                    stats.setPreferences(imagePcaf.getPreferences().size());
-                    stats.setPcafAttacks(imagePcaf.getAttacks().size());
-                    System.out.println(stats);
-                }
-
-                System.out.println("CAF is contained in image of reduction 2.");
-                System.out.println("Possible PCAF:");
-                f.parseOutput(imagePcaf);
-
             } else if(argsList.contains("i3")){
                 PCAF imagePcaf = new PCAF();
                 try {
-                    imagePcaf = ImageService.image3(pcaf, stats);
+                    imagePcaf = ImageService.image3(input, stats);
                 } catch (VerificationException e){
                     System.out.println("CAF NOT in image of reduction 3, missing at least one attack");
                     System.exit(0);
@@ -173,6 +153,13 @@ public class Main {
                     f.parseOutput(imagePcaf);
                     System.exit(0);
                 }
+
+                var redCAF = r.reduction3(imagePcaf, null);
+                if(!redCAF.equals(input)){
+                    System.out.println("CAF NOT in image of reduction 3, input and reduced CAF don't match");
+                    System.exit(0);
+                }
+
                 if (stats != null) {
                     stats.setPreferences(imagePcaf.getPreferences().size());
                     stats.setPcafAttacks(imagePcaf.getAttacks().size());
